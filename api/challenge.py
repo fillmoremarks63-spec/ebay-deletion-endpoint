@@ -3,7 +3,7 @@ import hashlib
 from urllib.parse import urlparse, parse_qs
 VERIFICATION_TOKEN = "sportscardappverificationtoken2026abc123xyz7"
 # MUST EXACTLY MATCH what you entered in eBay
-ENDPOINT_URL = "https://ebay-deletion-endpoint-fillmore-marks-projects.vercel.app/api/ebay/deletion" print(request.url)
+ENDPOINT_URL = "https://ebay-deletion-endpoint-fillmore-marks-projects.vercel.app/api/ebay/deletion"
 def handler(request):
     parsed_url = urlparse(request.url)
     query_params = parse_qs(parsed_url.query)
@@ -14,7 +14,7 @@ def handler(request):
             'body': json.dumps({'error': 'challenge_code parameter is required'})
         }
     #   THIS IS THE CRITICAL FIX
-    data = challenge_code + VERIFICATION_TOKEN + ENDPOINT_URL
+    data = challenge_code + sportscardappverificationtoken2026abc123xyz7 + https://ebay-deletion-endpoint-fillmore-marks-projects.vercel.app/api/ebay/deletion
     challenge_response = hashlib.sha256(
         data.encode("utf-8")
     ).hexdigest()
