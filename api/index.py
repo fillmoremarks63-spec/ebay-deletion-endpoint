@@ -7,10 +7,12 @@ VERIFICATION_TOKEN = "YOUR_TOKEN_HERE"
 def app(environ, start_response):
     """WSGI application for Vercel"""
     
-    # Parse query string
+    # Get the full request path and query string
+    path = environ.get('PATH_INFO', '/')
     query_string = environ.get('QUERY_STRING', '')
-    query_params = parse_qs(query_string)
     
+    # Parse query parameters
+    query_params = parse_qs(query_string)
     challenge_code = query_params.get('challenge_code', [''])[0]
     
     if not challenge_code:
