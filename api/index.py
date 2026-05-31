@@ -1,40 +1,36 @@
 import json
 import hashlib
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs
 
 VERIFICATION_TOKEN = "YOUR_TOKEN_HERE"
 
-def handler(request):
-    """Vercel serverless function handler"""
+def app(environ, start_response):
+    """WSGI application for Vercel"""
     
-    # Parse query parameters
-    parsed_url = urlparse(request.url)
-    query_params = parse_qs(parsed_url.query)
+    # Parse query string
+    query_string = environ.get('QUERY_STRING', '')
+    query_params = parse_qs(query_string)
     
     challenge_code = query_params.get('challenge_code', [''])[0]
     
     if not challenge_code:
-        return {
-            'statusCode': 400,
-            'body': json.dumps({'error': 'challenge_code parameter is required'})
-        }
+        response_body = json.dumps({'error': 'challenge_code parameter is required'})
+        status = '400 Bad Request'
+    else:
+        # Generate challenge response
+        challenge_response = hashlib.sha256(
+            (challenge_code + VERIFICATION_TOKEN).encode()
+        ).hexdigest()
+        
+        response_body = json.dumps({
+            "challengeResponse": challenge_response
+        })
+        status = '200 OK'
     
-    # Generate challenge response
-    challenge_response = hashlib.sha256(
-        (challenge_code + VERIFICATION_TOKEN).encode()
-    ).hexdigest()
+    response_headers = [
+        ('Content-Type', 'application/json'),
+        ('Content-Length', str(len(response_body)))
+    ]
     
-    response = {
-        "challengeResponse": challenge_response
-    }
-    
-    return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json',
-        },
-        'body': json.dumps(response)
-    }
-
-# Export handler for Vercel
-__all__ = ['handler']
+    start_response(status, response_headers)
+    return [response_body.encode()]
