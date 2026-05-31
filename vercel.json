@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "functions": {
-    "api/challenge.py": {
-      "runtime": "python3.11"
+  "builds": [
+    {
+      "src": "api/challenge.py",
+      "use": "@vercel/python"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/challenge.py"
+    }
+  ]
 }
