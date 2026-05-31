@@ -35,3 +35,6 @@ def handler(request):
         },
         'body': json.dumps(response)
     }
+
+# Export handler for Vercel
+__all__ = ['handler']
