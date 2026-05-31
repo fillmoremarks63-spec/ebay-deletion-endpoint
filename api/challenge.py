@@ -2,7 +2,7 @@ import json
 import hashlib
 from urllib.parse import urlparse, parse_qs
 
-VERIFICATION_TOKEN = "YOUR_TOKEN_HERE"
+VERIFICATION_TOKEN = "iLFAS@fillycheeez1234!iLFAS@fillycheeez1234!"
 
 def handler(request):
     """Vercel serverless function handler"""
