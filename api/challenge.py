@@ -3,7 +3,7 @@ import hashlib
 from urllib.parse import urlparse, parse_qs
 VERIFICATION_TOKEN = "sportscardappverificationtoken2026abc123xyz7"
 # MUST EXACTLY MATCH what you entered in eBay
-ENDPOINT_URL = "https://ebay-deletion-endpoint-fillmore-marks-projects.vercel.app/api/ebay/deletion"
+ENDPOINT_URL = "https://ebay-deletion-endpoint-fillmore-marks-projects.vercel.app/api/ebay/deletion" print (request.url)
 def handler(request):
     parsed_url = urlparse(request.url)
     query_params = parse_qs(parsed_url.query)
